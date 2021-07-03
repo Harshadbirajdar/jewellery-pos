@@ -1,0 +1,19 @@
+.paper {
+  /* marginTop: theme.spacing(8);
+    display: "flex"
+    flexDirection: "column",
+    alignItems: "center", */
+
+  margin-top: 8em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.avatar {
+  background-color: #f50057 !important;
+  margin: 0.5em;
+}
+.from {
+  margin-top: 1em;
+  width: 100%;
+}
