@@ -62,8 +62,11 @@ exports.loginUser = (req, res) => {
         { _id: user._id },
         process.env.REFRESH_TOKEN_SECRET
       );
-
-      user.refershToken.push(refreshToken);
+      if (user.refershToken.length >= 5) {
+        user.refershToken = [refreshToken];
+      } else {
+        user.refershToken.push(refreshToken);
+      }
       await user.save();
       const { _id, name, userName, role } = user;
       return res.json({
