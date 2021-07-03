@@ -1,23 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Avatar,
   Button,
   Container,
   CssBaseline,
-  makeStyles,
   TextField,
   Typography,
 } from "@material-ui/core";
-
 import { setToken, signin } from "../components/api";
 import { Alert } from "@material-ui/lab";
-// import { authenticated } from "../apicall";
 import styles from "../styles/Signin.module.css";
-import Cookies from "js-cookie";
 import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
 const Signin = () => {
   const router = useRouter();
+  useEffect(() => {
+    if (Cookies.get("role")) {
+      router.replace("/");
+    }
+  }, []);
   const [values, setValues] = useState({
     userName: "",
     password: "",
