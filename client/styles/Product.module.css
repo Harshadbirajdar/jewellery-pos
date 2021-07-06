@@ -1,0 +1,14 @@
+.auto_compelete {
+  padding-top: 1.7em;
+}
+.form {
+  padding: 1em;
+}
+.fab {
+  position: absolute !important;
+  bottom: 2em;
+  right: 3em;
+}
+.fab_icon {
+  margin-right: 0.3em;
+}

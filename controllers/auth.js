@@ -55,7 +55,7 @@ exports.loginUser = (req, res) => {
         { _id: user._id },
         process.env.ACCESS_TOKEN_SECRET,
         {
-          expiresIn: "10s",
+          expiresIn: "30m",
         }
       );
       const refreshToken = jwt.sign(
@@ -121,6 +121,16 @@ exports.isAdmin = (req, res, next) => {
   }
   next();
 };
+exports.isStaff = (req, res, next) => {
+  let user = req.profile;
+
+  if (user.role < 1) {
+    return res.status(400).json({
+      error: "Access Denied",
+    });
+  }
+  next();
+};
 
 exports.refershToken = (req, res) => {
   const token = req.body.token;
@@ -144,7 +154,7 @@ exports.refershToken = (req, res) => {
           { _id: userToken._id },
           process.env.ACCESS_TOKEN_SECRET,
           {
-            expiresIn: "10s",
+            expiresIn: "30m",
           }
         );
         res.json({

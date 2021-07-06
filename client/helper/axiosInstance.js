@@ -2,7 +2,7 @@ import axios from "axios";
 import { API } from "../config";
 import Cookies from "js-cookie";
 import router from "next/router";
-import { setToken } from "../components/api";
+import { destoryToken, setToken } from "../components/api";
 
 const axiosInstance = axios.create({
   baseURL: API,
@@ -23,6 +23,7 @@ axiosInstance.interceptors.response.use(
 
     if (error.response.status === 401) {
       if (!Cookies.get("refresh")) {
+        destoryToken();
         router.push("/signin");
         return "";
       }
@@ -39,7 +40,13 @@ axiosInstance.interceptors.response.use(
           return axios.request(error.response.config);
         })
         .catch((err) => {
-          return Promise.reject(err);
+          if (err.response.status === 401) {
+            destoryToken();
+            router.push("/signin");
+            return Promise.reject(err);
+          } else {
+            return Promise.reject(err);
+          }
         });
     }
     return new Promise((resolve, reject) => {

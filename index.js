@@ -12,6 +12,8 @@ const port = process.env.PORT || 4000;
 
 // Routes decelaration
 const userRoute = require("./routes/user");
+const metalRoute = require("./routes/metal");
+const productRoute = require("./routes/product");
 
 // DB connection
 mongoose
@@ -32,6 +34,8 @@ app.use(cors());
 
 // routes
 app.use("/api", userRoute);
+app.use("/api", metalRoute);
+app.use("/api", productRoute);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "client/build")));
