@@ -13,6 +13,7 @@ import {
   TableBody,
   TableCell,
   TableRow,
+  capitalize,
 } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import Base from "../../../core/Base";
@@ -44,7 +45,7 @@ const add = ({ fetchMetalList, Metal, addProduct }) => {
 
   const [values, setValues] = useState([]);
   const onhandleChange = (name) => (event) => {
-    setProduct({ ...product, [name]: event.target.value });
+    setProduct({ ...product, [name]: capitalize(event.target.value) });
   };
 
   const onAddClick = (e) => {

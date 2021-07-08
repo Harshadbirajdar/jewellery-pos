@@ -14,6 +14,7 @@ import FileCopyIcon from "@material-ui/icons/FileCopy";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import Link from "next/link";
+import DescriptionIcon from "@material-ui/icons/Description";
 import styles from "../styles/Menu.module.css";
 import { connect } from "react-redux";
 
@@ -76,6 +77,12 @@ const Menu = ({ Metal, metalChange, Product, productChange }) => {
           text="Add Product"
           Icon={CategoryIcon}
           link="/staff/product/add"
+          className={styles.nested}
+        />
+        <MenuItems
+          text="View Product"
+          Icon={DescriptionIcon}
+          link="/staff/product/view"
           className={styles.nested}
         />
       </SubMenuItem>

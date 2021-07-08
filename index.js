@@ -14,7 +14,7 @@ const port = process.env.PORT || 4000;
 const userRoute = require("./routes/user");
 const metalRoute = require("./routes/metal");
 const productRoute = require("./routes/product");
-
+const customerRoute = require("./routes/customer");
 // DB connection
 mongoose
   .connect(process.env.MONGODB_URI, {
@@ -36,6 +36,7 @@ app.use(cors());
 app.use("/api", userRoute);
 app.use("/api", metalRoute);
 app.use("/api", productRoute);
+app.use("/api", customerRoute);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "client/build")));

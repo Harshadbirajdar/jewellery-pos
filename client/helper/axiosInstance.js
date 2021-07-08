@@ -45,6 +45,13 @@ axiosInstance.interceptors.response.use(
             router.push("/signin");
             return Promise.reject(err);
           } else {
+            if (err.response.status === 403) {
+              if (err.response.data.error === "Refresh token not found") {
+                destoryToken();
+                router.push("/signin");
+                return Promise.reject(err);
+              }
+            }
             return Promise.reject(err);
           }
         });
