@@ -48,6 +48,7 @@ const Menu = ({ Metal, metalChange, Product, productChange }) => {
   return (
     <List>
       <MenuItems text="Dashboard" Icon={DashboardIcon} link="/" />
+      <MenuItems text="Sale Panel" Icon={DashboardIcon} link="/sale" />
       <SubMenuItem
         state={Metal}
         onChange={metalChange}

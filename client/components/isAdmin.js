@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { isAuthenticated } from "./api";
+import { destoryToken, isAuthenticated } from "./api";
 
 const isAdmin = (WrappedComponent) => {
   // eslint-disable-next-line
@@ -9,11 +9,14 @@ const isAdmin = (WrappedComponent) => {
       const Router = useRouter();
       if (!role) {
         Router.replace("/signin");
+        destoryToken();
         return null;
       }
 
       if (role !== 2) {
         Router.replace("/signin");
+        destoryToken();
+
         return null;
       }
 

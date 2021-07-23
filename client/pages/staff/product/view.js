@@ -26,6 +26,7 @@ const view = ({ fetchProduct, Product }) => {
           <TableContainer>
             <Table>
               <TableHead>
+                <TableCell>Tag No</TableCell>
                 <TableCell>Name</TableCell>
                 <TableCell>Metal</TableCell>
                 <TableCell>gross WT</TableCell>
@@ -40,6 +41,7 @@ const view = ({ fetchProduct, Product }) => {
               <TableBody>
                 {Product.product.map((product) => (
                   <TableRow key={product._id}>
+                    <TableCell>{product.tag}</TableCell>
                     <TableCell>{product.name}</TableCell>
                     <TableCell>
                       {product.metal.name + " " + product.metal.purity}

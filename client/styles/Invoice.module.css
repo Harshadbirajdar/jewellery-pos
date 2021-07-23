@@ -1,0 +1,89 @@
+.header {
+  text-align: center;
+}
+.header p {
+  margin: 0;
+}
+
+.logo_name {
+  margin-top: 0;
+}
+.customer_table {
+  display: flex;
+}
+.table_right {
+  margin-left: auto;
+}
+.invoice {
+  /* width: 21cm; */
+  /* height: 29.7cm; */
+
+  box-sizing: border-box;
+  page-break-inside: avoid;
+
+  border: 1px solid;
+}
+
+.rightAlign {
+  text-align: right;
+}
+.bottom_postion {
+  position: absolute !important;
+  bottom: 0;
+}
+
+.table {
+  /* border-collapse: collapse;
+  border: 1px solid black; */
+  width: 16em !important;
+  margin-left: auto;
+  margin-top: auto;
+  padding: 0;
+}
+.table td {
+  margin: 0;
+  padding: 5px;
+}
+
+/* table,
+th,
+td {
+  border: 1px solid black;
+} */
+.owner_signture {
+  /* margin-left: auto; */
+  margin-top: 0;
+  text-align: center;
+  /* border-right: 1px solid; */
+  border-bottom: 1px solid;
+  /* border-top: 1px solid; */
+  /* padding-bottom: 4em; */
+  width: 10em;
+}
+.customer_signture {
+  margin-left: auto;
+  text-align: center;
+  border: 1px solid;
+  padding-top: 4em;
+  width: 10em;
+}
+
+.footor {
+  /* padding: 0; */
+  margin-top: 0;
+  /* margin-left: auto; */
+  /* bottom: 2em; */
+  /* right: 0.2em; */
+  /* display: flex; */
+  /* position: absolute; */
+}
+
+.product {
+  min-height: 550px;
+  width: fit-content;
+  /* max-height: 600px; */
+}
+
+.bottom {
+  display: flex;
+}

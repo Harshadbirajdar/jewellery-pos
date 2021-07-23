@@ -34,3 +34,24 @@ exports.getAllProduct = async (req, res) => {
       return res.status(200).json({ totalCount, product });
     });
 };
+
+// get product by tagNo
+exports.getProductByTag = (req, res) => {
+  const tag = parseInt(req.query.tag);
+
+  Product.findOne({ tag })
+    .populate("metal")
+    .exec((err, product) => {
+      if (err) {
+        return res.status(400).json({
+          error: "Something went wrong",
+        });
+      }
+      if (!product) {
+        return res.status(403).json({
+          error: `${tag} Tag Number not found in Database`,
+        });
+      }
+      return res.json(product);
+    });
+};
