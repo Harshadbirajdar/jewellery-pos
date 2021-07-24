@@ -5,11 +5,12 @@ import {
   ListItemText,
   Collapse,
 } from "@material-ui/core";
+import AssessmentIcon from "@material-ui/icons/Assessment";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import CategoryIcon from "@material-ui/icons/Category";
 import TollIcon from "@material-ui/icons/Toll";
 import ViewAgendaIcon from "@material-ui/icons/ViewAgenda";
-import { metalState, productState } from "../redux/action/menu";
+import { metalState, productState, reportState } from "../redux/action/menu";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
@@ -20,7 +21,15 @@ import { connect } from "react-redux";
 import { withRouter } from "next/router";
 import ReceiptIcon from "@material-ui/icons/Receipt";
 
-const Menu = ({ Metal, metalChange, Product, productChange, router }) => {
+const Menu = ({
+  Metal,
+  metalChange,
+  Product,
+  productChange,
+  router,
+  reportChange,
+  Report,
+}) => {
   const MenuItems = ({ text, Icon, link, className = "" }) => (
     <Link href={link}>
       <List className={link === router.pathname && styles.active}>
@@ -91,12 +100,32 @@ const Menu = ({ Metal, metalChange, Product, productChange, router }) => {
           className={styles.nested}
         />
       </SubMenuItem>
+      <SubMenuItem
+        state={Report}
+        onChange={reportChange}
+        Icon={AssessmentIcon}
+        title="Report"
+      >
+        <MenuItems
+          text="Bill Report"
+          Icon={ReceiptIcon}
+          link="/staff/report/bill"
+          className={styles.nested}
+        />
+        <MenuItems
+          text="View Product"
+          Icon={DescriptionIcon}
+          link="/staff/product/view"
+          className={styles.nested}
+        />
+      </SubMenuItem>
     </List>
   );
 };
 const mapStateToProps = (state) => ({
   Metal: state.menu.metal,
   Product: state.menu.product,
+  Report: state.menu.report,
 });
 const mapDispatchToProps = (dispatch) => ({
   metalChange: () => {
@@ -104,6 +133,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   productChange: () => {
     dispatch(productState());
+  },
+  reportChange: () => {
+    dispatch(reportState());
   },
 });
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Menu));

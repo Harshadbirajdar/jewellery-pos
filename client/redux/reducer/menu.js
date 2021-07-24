@@ -1,8 +1,13 @@
-import { METAL_STATE, PRODUCT_STATE } from "../action/action.type";
+import {
+  METAL_STATE,
+  PRODUCT_STATE,
+  REPORT_STATE,
+} from "../action/action.type";
 
 const initalState = {
   metal: false,
   product: false,
+  report: false,
 };
 
 const menu = (state = initalState, action) => {
@@ -12,6 +17,8 @@ const menu = (state = initalState, action) => {
 
     case PRODUCT_STATE:
       return { ...state, product: !state.product };
+    case REPORT_STATE:
+      return { ...state, report: !state.report };
     default:
       return state;
   }
