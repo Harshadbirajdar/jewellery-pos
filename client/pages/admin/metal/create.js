@@ -12,7 +12,7 @@ import isAdmin from "../../../components/isAdmin";
 import { connect } from "react-redux";
 import { addNewMetal } from "../../../redux/action/metal";
 import { Alert } from "@material-ui/lab";
-const create = ({ createMetal, Metal }) => {
+const Create = ({ createMetal, Metal }) => {
   const [values, setValues] = useState({
     name: "",
     purity: "",
@@ -94,4 +94,4 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(addNewMetal(values, setValues, setOpen));
   },
 });
-export default connect(mapStateToProps, mapDispatchToProps)(isAdmin(create));
+export default connect(mapStateToProps, mapDispatchToProps)(isAdmin(Create));

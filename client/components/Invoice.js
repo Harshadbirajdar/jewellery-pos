@@ -9,7 +9,7 @@ import styles from "../styles/Invoice.module.css";
 import React, { useEffect, useRef } from "react";
 import moment from "moment";
 import { convertInToWord } from "./api";
-
+//  eslint-disable-next-line
 const Invoice = React.forwardRef((props, ref) => {
   const { bill } = props;
   const tableRef = useRef();

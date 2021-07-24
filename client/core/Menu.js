@@ -18,6 +18,8 @@ import DescriptionIcon from "@material-ui/icons/Description";
 import styles from "../styles/Menu.module.css";
 import { connect } from "react-redux";
 import { withRouter } from "next/router";
+import ReceiptIcon from "@material-ui/icons/Receipt";
+
 const Menu = ({ Metal, metalChange, Product, productChange, router }) => {
   const MenuItems = ({ text, Icon, link, className = "" }) => (
     <Link href={link}>
@@ -50,7 +52,7 @@ const Menu = ({ Metal, metalChange, Product, productChange, router }) => {
   return (
     <List>
       <MenuItems text="Dashboard" Icon={DashboardIcon} link="/" />
-      <MenuItems text="Sale Panel" Icon={DashboardIcon} link="/sale" />
+      <MenuItems text="Sale Panel" Icon={ReceiptIcon} link="/sale" />
       <SubMenuItem
         state={Metal}
         onChange={metalChange}

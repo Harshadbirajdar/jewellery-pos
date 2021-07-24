@@ -33,7 +33,7 @@ import styles from "../styles/Sale.module.css";
 import Invoice from "../components/Invoice";
 import { useReactToPrint } from "react-to-print";
 
-const sale = ({
+const Sale = ({
   Customer,
   addCustomer,
   fetchCustomer,
@@ -89,6 +89,7 @@ const sale = ({
 
   useEffect(() => {
     countTotalAmount();
+    //  eslint-disable-next-line
   }, [values.product.length]);
 
   const billForm = () => (
@@ -182,7 +183,7 @@ const sale = ({
       </TableHead>
       <TableBody>
         {values.product.map((product, index) => (
-          <TableRow>
+          <TableRow key={index}>
             <TableCell>{product.tag}</TableCell>
             <TableCell>{product.name}</TableCell>
             <TableCell>{product.metal.name}</TableCell>
@@ -320,4 +321,4 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(genrateBill(values, setValues));
   },
 });
-export default connect(mapStateToProps, mapDispatchToProps)(isStaff(sale));
+export default connect(mapStateToProps, mapDispatchToProps)(isStaff(Sale));

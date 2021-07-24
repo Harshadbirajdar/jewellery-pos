@@ -15,9 +15,10 @@ import {
   TableRow,
   TablePagination,
 } from "@material-ui/core";
-const view = ({ fetchProduct, Product }) => {
+const View = ({ fetchProduct, Product }) => {
   useEffect(() => {
     fetchProduct(Product.rowPerPage, Product.page);
+    //  eslint-disable-next-line
   }, []);
   return (
     <Base title="View Product">
@@ -87,4 +88,4 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(getAllProduct(rowPerPage, page));
   },
 });
-export default connect(mapStateToProps, mapDispatchToProps)(isStaff(view));
+export default connect(mapStateToProps, mapDispatchToProps)(isStaff(View));

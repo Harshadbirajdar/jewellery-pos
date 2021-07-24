@@ -14,9 +14,10 @@ import {
   TablePagination,
   Container,
 } from "@material-ui/core";
-const view = ({ fetchMetal, Metal }) => {
+const View = ({ fetchMetal, Metal }) => {
   useEffect(() => {
     fetchMetal(Metal.rowPerPage, Metal.page);
+    //  eslint-disable-next-line
   }, []);
   return (
     <Base title="View Metal">
@@ -64,4 +65,4 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(viewAllMetal(rowPerPage, page));
   },
 });
-export default connect(mapStateToProps, mapDispatchToProps)(isAdmin(view));
+export default connect(mapStateToProps, mapDispatchToProps)(isAdmin(View));

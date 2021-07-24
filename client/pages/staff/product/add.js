@@ -25,9 +25,10 @@ import Fab from "@material-ui/core/Fab";
 import SendIcon from "@material-ui/icons/Save";
 import isStaff from "../../../components/isStaff";
 
-const add = ({ fetchMetalList, Metal, addProduct }) => {
+const Add = ({ fetchMetalList, Metal, addProduct }) => {
   useEffect(() => {
     fetchMetalList();
+    //  eslint-disable-next-line
   }, []);
 
   const [product, setProduct] = useState({
@@ -285,4 +286,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(isStaff(add));
+export default connect(mapStateToProps, mapDispatchToProps)(isStaff(Add));
