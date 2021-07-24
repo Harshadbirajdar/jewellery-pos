@@ -1,3 +1,7 @@
 .nested {
   padding-left: 3em !important;
 }
+.active {
+  background-color: #556cd678 !important;
+  border-radius: 1em;
+}

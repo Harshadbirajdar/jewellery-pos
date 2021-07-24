@@ -35,7 +35,7 @@
 .table {
   /* border-collapse: collapse;
   border: 1px solid black; */
-  width: 16em !important;
+  width: 16.3em !important;
   margin-left: auto;
   margin-top: auto;
   padding: 0;
@@ -79,11 +79,22 @@ td {
 }
 
 .product {
-  min-height: 550px;
+  min-height: 520px;
   width: fit-content;
   /* max-height: 600px; */
 }
 
 .bottom {
   display: flex;
+}
+
+.owner {
+  padding-bottom: 4em;
+  width: 16.8em !important;
+  border-left: 1px solid;
+}
+.customer {
+  border-left: 1px solid;
+  width: 16.8em !important;
+  margin-left: auto;
 }

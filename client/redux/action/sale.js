@@ -64,14 +64,16 @@ const addNewCustomerFailed = (error) => ({
 
 export const addNewCustomer = (values, setValues, tagRef) => {
   return (dispatch) => {
+    dispatch(addNewCustomerStart());
     axiosInstance
       .post("/customer", {
         name: values.customer.name,
         phoneNumber: values.customer.phoneNumber,
       })
       .then((response) => {
+        const { name, phoneNumber, _id } = response.data;
         dispatch(addNewCustomerSuccess(response.data));
-        setValues(response.data);
+        setValues({ ...values, customer: { phoneNumber, name, _id } });
         tagRef.current.focus();
       })
       .catch((err) => {

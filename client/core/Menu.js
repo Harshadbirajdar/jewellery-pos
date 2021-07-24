@@ -17,11 +17,12 @@ import Link from "next/link";
 import DescriptionIcon from "@material-ui/icons/Description";
 import styles from "../styles/Menu.module.css";
 import { connect } from "react-redux";
-
-const Menu = ({ Metal, metalChange, Product, productChange }) => {
+import { withRouter } from "next/router";
+const Menu = ({ Metal, metalChange, Product, productChange, router }) => {
   const MenuItems = ({ text, Icon, link, className = "" }) => (
     <Link href={link}>
-      <List>
+      <List className={link === router.pathname && styles.active}>
+        {console.log(link === router.pathname)}
         <ListItem button className={className}>
           <ListItemIcon>
             <Icon color={className !== "" ? "inherit" : "primary"} />
@@ -45,6 +46,7 @@ const Menu = ({ Metal, metalChange, Product, productChange }) => {
       </Collapse>
     </>
   );
+  console.log(router.pathname);
   return (
     <List>
       <MenuItems text="Dashboard" Icon={DashboardIcon} link="/" />
@@ -102,4 +104,4 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(productState());
   },
 });
-export default connect(mapStateToProps, mapDispatchToProps)(Menu);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Menu));

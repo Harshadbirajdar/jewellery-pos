@@ -66,8 +66,7 @@ const sale = ({
   // console.log(values.product);
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
-    pageStyle:
-      "{margin:0.5em; border: 1px solid !important; body { border:2px #666 solid;} }",
+    pageStyle: "@page {  margin: 0.27in 0.27in;size:A5;}",
     onAfterPrint: () => {
       // setDialog(false);
       // clearCustomer();
@@ -222,9 +221,6 @@ const sale = ({
   };
   return (
     <Base title="Sale Panel">
-      {values.amount}
-      <br />
-      {values.gst3}
       <Container>
         {msg()}
         <Paper style={{ padding: "1.5em" }}>
@@ -293,9 +289,11 @@ const sale = ({
           <SaveIcon />
           Save
         </Fab>
-        {Object.keys(Bill.bill).length !== 0 && (
-          <Invoice bill={Bill.bill} ref={componentRef} />
-        )}
+        <div style={{ display: "none" }}>
+          {Object.keys(Bill.bill).length !== 0 && (
+            <Invoice bill={Bill.bill} ref={componentRef} />
+          )}
+        </div>
 
         {/* {invoice()} */}
       </Container>
