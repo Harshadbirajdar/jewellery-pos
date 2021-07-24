@@ -140,9 +140,6 @@ const Invoice = React.forwardRef((props, ref) => {
                   </td>
                 </tr>
               </table>
-              {/* <strong>Amount in Word :-</strong>
-
-              {convertInToWord(parseInt(bill.totalAmount))} */}
 
               <Table
                 className={styles.table}
