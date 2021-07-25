@@ -3,3 +3,11 @@
   bottom: 2em;
   right: 3em;
 }
+.totalCount {
+  /* padding: 0 4em; */
+  border: 1px solid;
+  margin-left: auto;
+  margin-bottom: 1em;
+  width: 15em;
+  text-align: center;
+}

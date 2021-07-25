@@ -6,6 +6,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from "../src/theme";
 import { Provider } from "react-redux";
 import store from "../redux/store";
+import "../styles/globals.css";
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;

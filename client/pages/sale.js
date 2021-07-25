@@ -48,6 +48,7 @@ const Sale = ({
     amount: 0,
     gst3: 0,
   });
+  const [product, setProduct] = useState({});
   const [gst3, setGst3] = useState(0);
   const [gst5, setGst5] = useState(0);
   const countTotalAmount = () => {
@@ -63,19 +64,12 @@ const Sale = ({
   useEffect(() => {
     console.log(componentRef.current?.clientHeight);
   }, [componentRef]);
-  // console.log(values.product);
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
     pageStyle: "@page {  margin: 0.27in 0.27in;size:A5;}",
-    onAfterPrint: () => {
-      // setDialog(false);
-      // clearCustomer();
-    },
-    // onBeforeGetContent: (a) => {
-    //   console.log(a);
-    // },
+    onAfterPrint: () => {},
   });
-  // console.log(values.product.reduce((a, b) => a + b.amount, 0));
+
   const [tag, setTag] = useState("");
   const [open, setOpen] = useState(false);
   const nameRef = useRef();
@@ -91,6 +85,8 @@ const Sale = ({
     countTotalAmount();
     //  eslint-disable-next-line
   }, [values.product.length]);
+
+  const handleChange = (name) => (event) => {};
 
   const billForm = () => (
     <Grid container spacing={2}>
@@ -273,6 +269,9 @@ const Sale = ({
                 }}
               />
             </Grid>
+            <div className={styles.totalCount}>
+              <h1>{parseInt(values.amount + values.gst3)}</h1>
+            </div>
           </Grid>
           {billForm()}
         </Paper>
@@ -295,8 +294,6 @@ const Sale = ({
             <Invoice bill={Bill.bill} ref={componentRef} />
           )}
         </div>
-
-        {/* {invoice()} */}
       </Container>
     </Base>
   );

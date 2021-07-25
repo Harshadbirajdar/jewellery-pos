@@ -9,8 +9,8 @@ const metalSchema = {
     type: String,
   },
   price: {
-    date: { type: Date },
-    value: { type: Number },
+    date: { type: Date, default: new Date() },
+    value: { type: Number, default: 0 },
   },
 };
 

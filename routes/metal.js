@@ -5,6 +5,7 @@ const {
   createMetal,
   viewAllMetals,
   viewAllMetalsList,
+  updateMetalRate,
 } = require("../controllers/metal");
 const router = express.Router();
 
@@ -25,5 +26,7 @@ router.get("/metal", isSignin, isAdmin, viewAllMetals);
 
 // get all metal list
 router.get("/metal/list", isSignin, isStaff, viewAllMetalsList);
+
+router.put("/metal", isSignin, isStaff, updateMetalRate);
 
 module.exports = router;

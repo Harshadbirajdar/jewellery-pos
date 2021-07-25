@@ -58,8 +58,7 @@ exports.viewAllMetals = async (req, res) => {
     });
 };
 exports.viewAllMetalsList = async (req, res) => {
-  Metal.find()
-  .exec((err, metals) => {
+  Metal.find().exec((err, metals) => {
     if (err) {
       return res.status(400).json({
         error: "Something went wrong",
@@ -67,4 +66,25 @@ exports.viewAllMetalsList = async (req, res) => {
     }
     return res.json(metals);
   });
+};
+
+exports.updateMetalRate = (req, res) => {
+  const metal = req.body;
+  let updateRate = [];
+  metal.map((metal) => {
+    let stock = {
+      updateOne: {
+        filter: { _id: metal._id },
+        update: { price: { date: new Date(), value: metal.price.value } },
+      },
+    };
+    updateRate.push(stock);
+  });
+  Metal.bulkWrite(updateRate)
+    .then((response) => {
+      return res.json(response);
+    })
+    .catch((err) => {
+      return res.status(400).json({ error: "Someting went wrong" });
+    });
 };

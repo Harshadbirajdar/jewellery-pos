@@ -20,6 +20,7 @@ import styles from "../styles/Menu.module.css";
 import { connect } from "react-redux";
 import { withRouter } from "next/router";
 import ReceiptIcon from "@material-ui/icons/Receipt";
+import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 
 const Menu = ({
   Metal,
@@ -94,6 +95,12 @@ const Menu = ({
           className={styles.nested}
         />
         <MenuItems
+          text="Add Product Tag"
+          Icon={LocalOfferIcon}
+          link="/staff/product/tag"
+          className={styles.nested}
+        />
+        <MenuItems
           text="View Product"
           Icon={DescriptionIcon}
           link="/staff/product/view"
@@ -110,12 +117,6 @@ const Menu = ({
           text="Bill Report"
           Icon={ReceiptIcon}
           link="/staff/report/bill"
-          className={styles.nested}
-        />
-        <MenuItems
-          text="View Product"
-          Icon={DescriptionIcon}
-          link="/staff/product/view"
           className={styles.nested}
         />
       </SubMenuItem>

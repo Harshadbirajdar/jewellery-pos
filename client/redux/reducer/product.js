@@ -1,7 +1,13 @@
 import {
+  ADD_NEW_METAL_TAG_FAILED,
+  ADD_NEW_METAL_TAG_START,
+  ADD_NEW_METAL_TAG_SUCCESS,
   GET_ALL_PRODUCT_FAILED,
   GET_ALL_PRODUCT_START,
   GET_ALL_PRODUCT_SUCCESS,
+  GET_METAL_FOR_TAG_FAILED,
+  GET_METAL_FOR_TAG_START,
+  GET_METAL_FOR_TAG_SUCCESS,
 } from "../action/action.type";
 
 const initalState = {
@@ -12,6 +18,17 @@ const initalState = {
     page: 0,
     totalCount: 0,
     product: [],
+  },
+  metalTag: {
+    loading: false,
+    error: false,
+    success: false,
+    tag: [],
+  },
+  metal: {
+    loading: false,
+    error: false,
+    metal: [],
   },
 };
 
@@ -44,6 +61,64 @@ const product = (state = initalState, action) => {
           loading: false,
           error: action.payload,
           product: [],
+        },
+      };
+    case GET_METAL_FOR_TAG_START:
+      return {
+        ...state,
+        metal: {
+          loading: true,
+          error: false,
+          metal: [],
+        },
+      };
+    case GET_METAL_FOR_TAG_SUCCESS:
+      return {
+        ...state,
+        metal: {
+          loading: false,
+          error: false,
+          metal: action.payload,
+        },
+      };
+    case GET_METAL_FOR_TAG_FAILED:
+      return {
+        ...state,
+        metal: {
+          loading: false,
+          error: action.payload,
+          metal: [],
+        },
+      };
+
+    case ADD_NEW_METAL_TAG_START:
+      return {
+        ...state,
+        metalTag: {
+          loading: true,
+          error: false,
+          success: false,
+          tag: [],
+        },
+      };
+    case ADD_NEW_METAL_TAG_SUCCESS:
+      return {
+        ...state,
+        metalTag: {
+          loading: false,
+          error: false,
+          success: true,
+          tag: action.payload,
+        },
+      };
+    case ADD_NEW_METAL_TAG_FAILED:
+      return {
+        ...state,
+        metalTag: {
+          loading: false,
+          error: action.payload,
+          success: false,
+          tag: [],
         },
       };
     default:

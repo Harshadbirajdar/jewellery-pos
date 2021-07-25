@@ -16,6 +16,7 @@ const metalRoute = require("./routes/metal");
 const productRoute = require("./routes/product");
 const customerRoute = require("./routes/customer");
 const billRoute = require("./routes/bill");
+const metalTagRoute = require("./routes/metalTag");
 // DB connection
 mongoose
   .connect(process.env.MONGODB_URI, {
@@ -39,6 +40,7 @@ app.use("/api", metalRoute);
 app.use("/api", productRoute);
 app.use("/api", customerRoute);
 app.use("/api", billRoute);
+app.use("/api", metalTagRoute);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "client/build")));
