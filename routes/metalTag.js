@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { createMetalTag } = require("../controllers/metalTag");
+const { createMetalTag, getMetalTag } = require("../controllers/metalTag");
 const { isSignin, isStaff } = require("../controllers/auth");
 const { check } = require("express-validator");
 
@@ -22,4 +22,6 @@ router.post(
   createMetalTag
 );
 
+// get metal by Tag
+router.get("/tag/metal", isSignin, isStaff, getMetalTag);
 module.exports = router;

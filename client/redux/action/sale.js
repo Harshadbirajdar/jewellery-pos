@@ -8,6 +8,9 @@ import {
   GET_CUSTOMER_BY_NUMBER_FOR_SALE_FAILED,
   GET_CUSTOMER_BY_NUMBER_FOR_SALE_START,
   GET_CUSTOMER_BY_NUMBER_FOR_SALE_SUCCESS,
+  GET_METAL_BY_TAG_FAILED,
+  GET_METAL_BY_TAG_START,
+  GET_METAL_BY_TAG_SUCCESS,
   GET_PRODUCT_BY_TAG_FAILED,
   GET_PRODUCT_BY_TAG_START,
   GET_PRODUCT_BY_TAG_SUCCESS,
@@ -161,6 +164,37 @@ export const genrateBill = (values, setValues) => {
       })
       .catch((err) => {
         dispatch(genrateBillFailed(err.response.data.error));
+      });
+  };
+};
+
+const getMetalByTagStart = () => ({
+  type: GET_METAL_BY_TAG_START,
+});
+
+const getMetalByTagSuccess = (metal) => ({
+  type: GET_METAL_BY_TAG_SUCCESS,
+  payload: metal,
+});
+
+const getMetalByTagFailed = (error) => ({
+  type: GET_METAL_BY_TAG_FAILED,
+  payload: error,
+});
+
+export const getMetalByTag = (tag, values, setValues, setOpen) => {
+  return (dispatch) => {
+    dispatch(getMetalByTagStart());
+    axiosInstance
+      .get(`/tag/metal?tag=${tag}`)
+      .then((response) => {
+        dispatch(getMetalByTagSuccess(response.data));
+      })
+      .catch((err) => {
+        if (err.response?.data?.error) {
+          setOpen(true);
+        }
+        dispatch(getMetalByTagFailed(err.response?.data?.error));
       });
   };
 };
