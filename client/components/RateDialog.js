@@ -80,7 +80,7 @@ const RateDialog = ({ getAllMetal }) => {
           <Container>
             <Grid container spacing={2}>
               {values.map((metal, index) => (
-                <Grid item md={12}>
+                <Grid item md={12} key={index}>
                   <TextField
                     fullWidth
                     variant="outlined"

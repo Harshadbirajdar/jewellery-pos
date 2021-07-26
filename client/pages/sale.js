@@ -24,7 +24,9 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import {
   addNewCustomer,
   genrateBill,
+  getAllTagForSale,
   getCustomerByPhone,
+  getMetalByTag,
   getProductByTag,
 } from "../redux/action/sale";
 import { connect } from "react-redux";
@@ -32,6 +34,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styles from "../styles/Sale.module.css";
 import Invoice from "../components/Invoice";
 import { useReactToPrint } from "react-to-print";
+import { round } from "../helper";
 
 const Sale = ({
   Customer,
@@ -40,17 +43,31 @@ const Sale = ({
   fetchProductByTag,
   Tag,
   genrateBill,
-
+  getMetalByTag,
   Bill,
+  getAllTagList,
+  TagList,
+  MetalTag,
 }) => {
   const [values, setValues] = useState({
     product: [],
     amount: 0,
     gst3: 0,
   });
-  const [product, setProduct] = useState({});
-  const [gst3, setGst3] = useState(0);
-  const [gst5, setGst5] = useState(0);
+  const [product, setProduct] = useState({
+    grossWt: "",
+    netWt: "",
+    labour: "",
+    labourOn: "",
+    metal: "",
+    name: "",
+    hsn: "",
+    gst: "",
+    rate: "",
+    qty: "",
+    tag: "",
+  });
+
   const countTotalAmount = () => {
     let amount = values.product.reduce((a, b) => a + b.amount, 0);
     setValues({
@@ -62,8 +79,9 @@ const Sale = ({
 
   const componentRef = useRef();
   useEffect(() => {
-    console.log(componentRef.current?.clientHeight);
-  }, [componentRef]);
+    getAllTagList();
+    // eslint-disable-next-line
+  }, []);
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
     pageStyle: "@page {  margin: 0.27in 0.27in;size:A5;}",
@@ -74,19 +92,20 @@ const Sale = ({
   const [open, setOpen] = useState(false);
   const nameRef = useRef();
   const tagRef = useRef();
-
-  const metal = [
-    { name: "Gold", purity: "22K" },
-    { name: "Gold", purity: "24K" },
-    { name: "Gold", purity: "20K" },
-  ];
+  const grossRef = useRef();
+  const netRef = useRef();
+  const qtyRef = useRef();
+  const labourRef = useRef();
+  const rateRef = useRef();
 
   useEffect(() => {
     countTotalAmount();
     //  eslint-disable-next-line
-  }, [values.product.length]);
+  }, [values.product?.length]);
 
-  const handleChange = (name) => (event) => {};
+  const handleChange = (name) => (event) => {
+    setProduct({ ...product, [name]: event.target.value });
+  };
 
   const billForm = () => (
     <Grid container spacing={2}>
@@ -101,8 +120,11 @@ const Sale = ({
           }}
           onKeyDown={(e) => {
             if (e.code === "Enter" || e.code === "NumpadEnter") {
-              fetchProductByTag(tag, setTag, values, setValues, setOpen);
-              // countTotalAmount();
+              if (tag > 100) {
+                fetchProductByTag(tag, setTag, values, setValues, setOpen);
+              } else {
+                getMetalByTag(tag, grossRef, product, setProduct, setOpen);
+              }
             }
           }}
           inputRef={tagRef}
@@ -110,38 +132,74 @@ const Sale = ({
       </Grid>
       <Grid item md={2}>
         <Autocomplete
-          options={metal}
-          getOptionLabel={(option) => option.name + " " + option.purity}
+          options={TagList.tag}
+          getOptionLabel={(option) => option.name}
           //   style={{ width: 300 }}
-          // value={product.metal !== undefined && product.metal}
-          //   onInputChange={(event, newInputValue) => {
-          //     setProduct({ ...product, metal: newInputValue });
-          //   }}
-          //   onChange={(event, newValue) => {
-          //     setProduct({ ...product, metal: newValue });
-          //   }}
+          // value={""}
+          onInputChange={(event, newInputValue) => {
+            setProduct({ ...product, metal: newInputValue });
+          }}
+          onChange={(event, newValue) => {
+            setProduct({ ...product, metal: newValue });
+          }}
           renderInput={(params) => (
             <TextField {...params} label="Metal" variant="outlined" />
           )}
         />
       </Grid>
       <Grid item md={1}>
-        <TextField variant="outlined" label="Gorss Wt" type="Number" />
+        <TextField
+          variant="outlined"
+          label="Gorss Wt"
+          type="Number"
+          inputRef={grossRef}
+          value={product.grossWt}
+          onChange={handleChange("grossWt")}
+          onKeyDown={(e) => {
+            if (e.code === "Enter" || e.code === "NumpadEnter") {
+              netRef.current.focus();
+            }
+          }}
+        />
       </Grid>
       <Grid item md={1}>
-        <TextField variant="outlined" label="Net Wt" type="Number" />
+        <TextField
+          variant="outlined"
+          label="Net Wt"
+          type="Number"
+          value={product.netWt}
+          inputRef={netRef}
+          onChange={handleChange("netWt")}
+          onKeyDown={(e) => {
+            if (e.code === "Enter" || e.code === "NumpadEnter") {
+              labourRef.current.focus();
+            }
+          }}
+        />
       </Grid>
       <Grid item md={2}>
-        <TextField variant="outlined" label="Labour" type="Number" />
+        <TextField
+          variant="outlined"
+          label="Labour"
+          type="Number"
+          inputRef={labourRef}
+          value={product.labour}
+          onChange={handleChange("labour")}
+          onKeyDown={(e) => {
+            if (e.code === "Enter" || e.code === "NumpadEnter") {
+              qtyRef.current.focus();
+            }
+          }}
+        />
       </Grid>
       <Grid item md={2}>
         <FormControl variant="outlined" fullWidth>
           <InputLabel>Labour on</InputLabel>
           <Select
-            // value={product.labourOn}
-            // onChange={(e) => {
-            //   setProduct({ ...product, labourOn: e.target.value });
-            // }}
+            value={product.labourOn}
+            onChange={(e) => {
+              setProduct({ ...product, labourOn: e.target.value });
+            }}
             label="Labour on"
           >
             <MenuItem value={0}>Fixed</MenuItem>
@@ -150,19 +208,74 @@ const Sale = ({
         </FormControl>
       </Grid>
       <Grid item md={1}>
-        <TextField variant="outlined" label="Qty" type="Number" />
+        <TextField
+          variant="outlined"
+          label="Qty"
+          type="Number"
+          inputRef={qtyRef}
+          value={product.qty}
+          onChange={handleChange("qty")}
+          onKeyDown={(e) => {
+            if (e.code === "Enter" || e.code === "NumpadEnter") {
+              rateRef.current.focus();
+            }
+          }}
+        />
       </Grid>
       <Grid item md={1}>
-        <TextField variant="outlined" label="Rate" type="Number" />
+        <TextField
+          variant="outlined"
+          label="Rate"
+          type="Number"
+          inputRef={rateRef}
+          value={product.rate}
+          onChange={handleChange("rate")}
+        />
       </Grid>
       <Grid item md={1} style={{ marginTop: "0.7em" }}>
-        <Button color="primary" variant="contained" onClick={handlePrint}>
+        <Button color="primary" variant="contained" onClick={onAddClick}>
           Add
         </Button>
       </Grid>
     </Grid>
   );
 
+  const onAddClick = () => {
+    let localProduct = product;
+    let products = values.product;
+    let gst3 = values.gst3;
+    let gst = 0;
+    let amount = localProduct.netWt * localProduct.rate;
+    localProduct.tag = tag;
+    if (localProduct.labourOn === 1) {
+      let labour = round(amount * (parseInt(localProduct.labour) / 100));
+      localProduct.labour = labour;
+      localProduct.amount = amount + labour;
+    } else {
+      localProduct.amount =
+        localProduct.netWt * localProduct.rate + parseInt(localProduct.labour);
+    }
+    gst = (localProduct.amount * parseInt(localProduct.gst)) / 100;
+    if (parseInt(localProduct.gst) === 3) {
+      gst3 += gst;
+    }
+    products.push(localProduct);
+    setValues({ ...values, gst3, product: products });
+    setProduct({
+      grossWt: "",
+      netWt: "",
+      labour: "",
+      labourOn: "",
+      metal: "",
+      name: "",
+      hsn: "",
+      gst: "",
+      rate: "",
+      qty: "",
+      tag: "",
+    });
+    setTag("");
+  };
   const ProductTable = () => (
     <Table>
       <TableHead>
@@ -189,7 +302,7 @@ const Sale = ({
             <TableCell>{product.rate}</TableCell>
             <TableCell>{product.qty}</TableCell>
             <TableCell>{product.labour}</TableCell>
-            <TableCell>{product.amount}</TableCell>
+            <TableCell>{product.amount.toFixed(2)}</TableCell>
           </TableRow>
         ))}
       </TableBody>
@@ -283,7 +396,7 @@ const Sale = ({
           className={styles.extendedIcon}
           disabled={values.product.length === 0}
           onClick={() => {
-            genrateBill(values, setValues);
+            genrateBill(values, setValues, handlePrint);
           }}
         >
           <SaveIcon />
@@ -302,6 +415,8 @@ const mapStateToProps = (state) => ({
   Customer: state.sale.customer,
   Tag: state.sale.tag,
   Bill: state.sale.bill,
+  TagList: state.sale.tagList,
+  MetalTag: state.sale.metalTag,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -314,8 +429,14 @@ const mapDispatchToProps = (dispatch) => ({
   fetchProductByTag: (tag, setTag, values, setValues, setOpen) => {
     dispatch(getProductByTag(tag, setTag, values, setValues, setOpen));
   },
-  genrateBill: (values, setValues) => {
-    dispatch(genrateBill(values, setValues));
+  genrateBill: (values, setValues, handlePrint) => {
+    dispatch(genrateBill(values, setValues, handlePrint));
+  },
+  getMetalByTag: (tag, grossRef, values, setValues, setOpen) => {
+    dispatch(getMetalByTag(tag, grossRef, values, setValues, setOpen));
+  },
+  getAllTagList: () => {
+    dispatch(getAllTagForSale());
   },
 });
 export default connect(mapStateToProps, mapDispatchToProps)(isStaff(Sale));

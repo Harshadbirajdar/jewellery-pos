@@ -118,7 +118,7 @@ const Invoice = React.forwardRef((props, ref) => {
                       {product.qty}
                     </TableCell>
                     <TableCell style={{ borderBottom: "1px solid" }}>
-                      {product.amount}
+                      {product.amount.toFixed(2)}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -159,7 +159,7 @@ const Invoice = React.forwardRef((props, ref) => {
                     align="center"
                     style={{ borderBottom: "1px solid" }}
                   >
-                    {bill.amount}
+                    {bill.amount.toFixed(2)}
                   </TableCell>
                 </TableRow>
                 <TableRow>

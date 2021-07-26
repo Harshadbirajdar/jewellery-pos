@@ -5,9 +5,15 @@ import {
   GENRATE_BILL_FAILED,
   GENRATE_BILL_START,
   GENRATE_BILL_SUCCESS,
+  GET_ALL_TAG_FOR_SALE_FAILED,
+  GET_ALL_TAG_FOR_SALE_START,
+  GET_ALL_TAG_FOR_SALE_SUCCESS,
   GET_CUSTOMER_BY_NUMBER_FOR_SALE_FAILED,
   GET_CUSTOMER_BY_NUMBER_FOR_SALE_START,
   GET_CUSTOMER_BY_NUMBER_FOR_SALE_SUCCESS,
+  GET_METAL_BY_TAG_FAILED,
+  GET_METAL_BY_TAG_START,
+  GET_METAL_BY_TAG_SUCCESS,
   GET_PRODUCT_BY_TAG_FAILED,
   GET_PRODUCT_BY_TAG_START,
   GET_PRODUCT_BY_TAG_SUCCESS,
@@ -15,6 +21,11 @@ import {
 
 const initalState = {
   tag: {
+    loading: false,
+    error: false,
+    product: {},
+  },
+  metalTag: {
     loading: false,
     error: false,
     product: {},
@@ -28,6 +39,11 @@ const initalState = {
     loading: false,
     error: false,
     bill: {},
+  },
+  tagList: {
+    loaidng: false,
+    error: false,
+    list: [],
   },
 };
 
@@ -119,6 +135,54 @@ const sale = (state = initalState, action) => {
         },
       };
 
+    case GET_METAL_BY_TAG_START:
+      return {
+        ...state,
+        metalTag: {
+          loading: true,
+          error: false,
+          product: {},
+        },
+      };
+    case GET_METAL_BY_TAG_SUCCESS:
+      return {
+        ...state,
+        metalTag: { loading: false, error: false, product: action.payload },
+      };
+
+    case GET_METAL_BY_TAG_FAILED:
+      return {
+        ...state,
+        tag: { loading: false, error: action.payload, product: {} },
+      };
+
+    case GET_ALL_TAG_FOR_SALE_START:
+      return {
+        ...state,
+        tagList: {
+          loading: true,
+          error: false,
+          tag: [],
+        },
+      };
+    case GET_ALL_TAG_FOR_SALE_SUCCESS:
+      return {
+        ...state,
+        tagList: {
+          loading: false,
+          error: false,
+          tag: action.payload,
+        },
+      };
+    case GET_ALL_TAG_FOR_SALE_FAILED:
+      return {
+        ...state,
+        tagList: {
+          loading: false,
+          error: action.payload,
+          tag: [],
+        },
+      };
     default:
       return state;
   }

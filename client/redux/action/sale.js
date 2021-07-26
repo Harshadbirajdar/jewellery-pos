@@ -5,6 +5,9 @@ import {
   GENRATE_BILL_FAILED,
   GENRATE_BILL_START,
   GENRATE_BILL_SUCCESS,
+  GET_ALL_TAG_FOR_SALE_FAILED,
+  GET_ALL_TAG_FOR_SALE_START,
+  GET_ALL_TAG_FOR_SALE_SUCCESS,
   GET_CUSTOMER_BY_NUMBER_FOR_SALE_FAILED,
   GET_CUSTOMER_BY_NUMBER_FOR_SALE_START,
   GET_CUSTOMER_BY_NUMBER_FOR_SALE_SUCCESS,
@@ -149,7 +152,7 @@ const genrateBillFailed = (error) => ({
   payload: error,
 });
 
-export const genrateBill = (values, setValues) => {
+export const genrateBill = (values, setValues, handlePrint) => {
   return (dispatch) => {
     dispatch(genrateBillStart());
     axiosInstance
@@ -161,6 +164,7 @@ export const genrateBill = (values, setValues) => {
           gst3: 0,
           amount: 0,
         });
+        handlePrint();
       })
       .catch((err) => {
         dispatch(genrateBillFailed(err.response.data.error));
@@ -182,19 +186,49 @@ const getMetalByTagFailed = (error) => ({
   payload: error,
 });
 
-export const getMetalByTag = (tag, values, setValues, setOpen) => {
+export const getMetalByTag = (tag, grossRef, values, setValues, setOpen) => {
   return (dispatch) => {
     dispatch(getMetalByTagStart());
     axiosInstance
       .get(`/tag/metal?tag=${tag}`)
       .then((response) => {
         dispatch(getMetalByTagSuccess(response.data));
+        const { metal, gst, name, hsn, labour, labourOn } = response.data;
+        setValues({ ...values, metal, gst, name, hsn, labour, labourOn });
+        grossRef.current.focus();
       })
       .catch((err) => {
         if (err.response?.data?.error) {
           setOpen(true);
         }
         dispatch(getMetalByTagFailed(err.response?.data?.error));
+      });
+  };
+};
+
+const getAllTagForSaleStart = () => ({
+  type: GET_ALL_TAG_FOR_SALE_START,
+});
+const getAllTagForSaleSuccess = (tag) => ({
+  type: GET_ALL_TAG_FOR_SALE_SUCCESS,
+  payload: tag,
+});
+const getAllTagForSaleFailed = (error) => ({
+  type: GET_ALL_TAG_FOR_SALE_FAILED,
+  payload: error,
+});
+
+export const getAllTagForSale = () => {
+  return (dispatch) => {
+    dispatch(getAllTagForSaleStart());
+
+    axiosInstance
+      .get("/tag")
+      .then((response) => {
+        dispatch(getAllTagForSaleSuccess(response.data));
+      })
+      .catch((err) => {
+        dispatch(getAllTagForSaleFailed(err.response?.data?.error));
       });
   };
 };

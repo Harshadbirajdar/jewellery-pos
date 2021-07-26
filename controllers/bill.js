@@ -26,8 +26,8 @@ exports.createBill = async (req, res, next) => {
       });
     }
     req.bill = bill;
-    res.json(bill);
-    //   next();
+    // res.json(bill);
+    next();
   });
 };
 
