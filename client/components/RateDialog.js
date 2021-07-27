@@ -12,7 +12,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
-import { getAllMetalListForRate } from "../redux/action/rate";
+import { getAllMetalListForRate, updateRate } from "../redux/action/rate";
 import { connect } from "react-redux";
 import { Container, Grid, TextField } from "@material-ui/core";
 import SaveIcon from "@material-ui/icons/Save";
@@ -31,14 +31,18 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const RateDialog = ({ getAllMetal }) => {
+const RateDialog = ({ getAllMetal, updateRate, Metal }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [values, setValues] = useState([]);
   useEffect(() => {
-    getAllMetal(values, setValues);
+    getAllMetal();
     // eslint-disable-next-line
   }, []);
+  useEffect(() => {
+    setValues(Metal.metal);
+    // eslint-disable-next-line
+  }, [Metal]);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -47,10 +51,17 @@ const RateDialog = ({ getAllMetal }) => {
     setOpen(false);
   };
 
+  const handleInputChange = (e, index) => {
+    const { value } = e.target;
+
+    const list = [...values];
+    list[index].price.value = value;
+    setValues(list);
+  };
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Open full-screen dialog
+        Change Rate
       </Button>
       <Dialog
         fullScreen
@@ -71,9 +82,6 @@ const RateDialog = ({ getAllMetal }) => {
             <Typography variant="h6" className={classes.title}>
               Update Rate
             </Typography>
-            <Button autoFocus color="inherit" onClick={handleClose}>
-              save
-            </Button>
           </Toolbar>
         </AppBar>
         <List>
@@ -86,6 +94,9 @@ const RateDialog = ({ getAllMetal }) => {
                     variant="outlined"
                     label={metal.name + "" + metal.purity}
                     value={metal.price?.value || ""}
+                    onChange={(e) => {
+                      handleInputChange(e, index);
+                    }}
                   />
                 </Grid>
               ))}
@@ -94,6 +105,9 @@ const RateDialog = ({ getAllMetal }) => {
                   variant="contained"
                   color="primary"
                   startIcon={<SaveIcon />}
+                  onClick={() => {
+                    updateRate(values, handleClose);
+                  }}
                 >
                   Save
                 </Button>
@@ -118,12 +132,15 @@ const RateDialog = ({ getAllMetal }) => {
   );
 };
 const mapStateToProps = (state) => ({
-  //   Metal: state.rate.metal,
+  Metal: state.rate.metal,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getAllMetal: (values, setValues) => {
-    dispatch(getAllMetalListForRate(values, setValues));
+  getAllMetal: () => {
+    dispatch(getAllMetalListForRate());
+  },
+  updateRate: (values, setValues) => {
+    dispatch(updateRate(values, setValues));
   },
 });
 

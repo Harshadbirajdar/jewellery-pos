@@ -83,7 +83,7 @@ const Bill = ({ fetchBill, Bill }) => {
                       {bill.customer?.name ? bill.customer.name : "-"}
                     </TableCell>
                     <TableCell>{bill.product.length}</TableCell>
-                    <TableCell>{bill.amount}</TableCell>
+                    <TableCell>{bill.amount.toFixed(2)}</TableCell>
                     <TableCell>{bill.gst3?.toFixed(2)}</TableCell>
                     <TableCell>{parseInt(bill.totalAmount)}</TableCell>
                     <TableCell>

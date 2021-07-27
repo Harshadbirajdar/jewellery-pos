@@ -10,7 +10,12 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 import CategoryIcon from "@material-ui/icons/Category";
 import TollIcon from "@material-ui/icons/Toll";
 import ViewAgendaIcon from "@material-ui/icons/ViewAgenda";
-import { metalState, productState, reportState } from "../redux/action/menu";
+import {
+  metalState,
+  productState,
+  reportState,
+  customerState,
+} from "../redux/action/menu";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
@@ -18,9 +23,13 @@ import Link from "next/link";
 import DescriptionIcon from "@material-ui/icons/Description";
 import styles from "../styles/Menu.module.css";
 import { connect } from "react-redux";
-import { withRouter } from "next/router";
+import { withRouter, useRouter } from "next/router";
 import ReceiptIcon from "@material-ui/icons/Receipt";
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
+import PeopleIcon from "@material-ui/icons/People";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import { destoryToken } from "../components/api";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 const Menu = ({
   Metal,
@@ -30,6 +39,8 @@ const Menu = ({
   router,
   reportChange,
   Report,
+  customerChange,
+  Customer,
 }) => {
   const MenuItems = ({ text, Icon, link, className = "" }) => (
     <Link href={link}>
@@ -108,6 +119,19 @@ const Menu = ({
         />
       </SubMenuItem>
       <SubMenuItem
+        state={Customer}
+        onChange={customerChange}
+        Icon={PeopleIcon}
+        title="Customer"
+      >
+        <MenuItems
+          text="View Customer"
+          Icon={AccountCircleIcon}
+          link="/staff/customer/view"
+          className={styles.nested}
+        />
+      </SubMenuItem>
+      <SubMenuItem
         state={Report}
         onChange={reportChange}
         Icon={AssessmentIcon}
@@ -120,6 +144,20 @@ const Menu = ({
           className={styles.nested}
         />
       </SubMenuItem>
+      <List>
+        <ListItem
+          button
+          onClick={() => {
+            destoryToken();
+            router.push("/signin");
+          }}
+        >
+          <ListItemIcon>
+            <ExitToAppIcon color="primary" />
+          </ListItemIcon>
+          <ListItemText primary="Sign Out"></ListItemText>
+        </ListItem>
+      </List>
     </List>
   );
 };
@@ -127,6 +165,7 @@ const mapStateToProps = (state) => ({
   Metal: state.menu.metal,
   Product: state.menu.product,
   Report: state.menu.report,
+  Customer: state.menu.customer,
 });
 const mapDispatchToProps = (dispatch) => ({
   metalChange: () => {
@@ -137,6 +176,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   reportChange: () => {
     dispatch(reportState());
+  },
+  customerChange: () => {
+    dispatch(customerState());
   },
 });
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Menu));

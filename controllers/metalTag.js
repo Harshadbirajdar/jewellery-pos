@@ -30,19 +30,21 @@ exports.createMetalTag = (req, res) => {
 exports.getMetalTag = (req, res) => {
   const tag = req.query.tag;
 
-  MetalTag.findOne({ tag }).exec((err, tag) => {
-    if (err) {
-      return res.status(400).json({
-        error: "Something Went Wrong",
-      });
-    }
-    if (!tag) {
-      return res.status(403).json({
-        error: "Tag Not Found in Database",
-      });
-    }
-    return res.json(tag);
-  });
+  MetalTag.findOne({ tag })
+    .populate("metal")
+    .exec((err, tag) => {
+      if (err) {
+        return res.status(400).json({
+          error: "Something Went Wrong",
+        });
+      }
+      if (!tag) {
+        return res.status(403).json({
+          error: "Tag Not Found in Database",
+        });
+      }
+      return res.json(tag);
+    });
 };
 
 exports.getAllMetalTag = (req, res) => {

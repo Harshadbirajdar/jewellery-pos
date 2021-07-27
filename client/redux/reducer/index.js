@@ -6,6 +6,7 @@ import product from "./product";
 import sale from "./sale";
 import report from "./report";
 import rate from "./rate";
+import customer from "./customer";
 const rootReducer = combineReducers({
   metal,
   menu,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   sale,
   report,
   rate,
+  customer,
 });
 
 export default rootReducer;

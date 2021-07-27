@@ -113,7 +113,7 @@ export const getProductByTag = (tag, setTag, values, setValues, setOpen) => {
         dispatch(getProductByTagSuccess(response.data));
         let products = values.product;
         localProduct.qty = 1;
-        localProduct.rate = 4300;
+        localProduct.rate = localProduct.metal?.price.value;
         let amount = localProduct.netWt * localProduct.rate;
         if (localProduct.labourOn === 1) {
           let labour = round(amount * (localProduct.labour / 100));
@@ -194,7 +194,16 @@ export const getMetalByTag = (tag, grossRef, values, setValues, setOpen) => {
       .then((response) => {
         dispatch(getMetalByTagSuccess(response.data));
         const { metal, gst, name, hsn, labour, labourOn } = response.data;
-        setValues({ ...values, metal, gst, name, hsn, labour, labourOn });
+        setValues({
+          ...values,
+          metal,
+          gst,
+          name,
+          hsn,
+          labour,
+          labourOn,
+          rate: metal.price?.value,
+        });
         grossRef.current.focus();
       })
       .catch((err) => {
