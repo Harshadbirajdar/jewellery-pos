@@ -44,7 +44,11 @@ export const getCustomerByPhone = (values, setValues, nameRef, tagRef) => {
       )
       .then((response) => {
         dispatch(getCustomerByPhoneNumberSuccess(response.data));
-        setValues({ ...values, customer: response.data });
+        setValues({
+          ...values,
+          customer: response.data,
+          pending: response.data.pending,
+        });
         tagRef.current.focus();
       })
       .catch((err) => {
@@ -152,7 +156,7 @@ const genrateBillFailed = (error) => ({
   payload: error,
 });
 
-export const genrateBill = (values, setValues, handlePrint) => {
+export const genrateBill = (values, setValues, handlePrint, setDialog) => {
   return (dispatch) => {
     dispatch(genrateBillStart());
     axiosInstance
@@ -163,8 +167,13 @@ export const genrateBill = (values, setValues, handlePrint) => {
           product: [],
           gst3: 0,
           amount: 0,
+          totalAmount: 0,
+          cash: "",
+          online: "",
+          discount: "",
         });
         handlePrint();
+        setDialog(false);
       })
       .catch((err) => {
         dispatch(genrateBillFailed(err.response.data.error));

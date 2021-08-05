@@ -30,6 +30,7 @@ const View = ({ fetchCustomer, Customer }) => {
                   <TableCell>Name</TableCell>
                   <TableCell>Phone Number</TableCell>
                   <TableCell>Total Bill</TableCell>
+                  <TableCell>Pending</TableCell>
                   <TableCell>Created At</TableCell>
                   <TableCell>Action</TableCell>
                 </TableRow>
@@ -40,6 +41,7 @@ const View = ({ fetchCustomer, Customer }) => {
                     <TableCell>{customer.name}</TableCell>
                     <TableCell>{customer.phoneNumber}</TableCell>
                     <TableCell>{customer.purchase.length}</TableCell>
+                    <TableCell>{customer.pending}</TableCell>
                     <TableCell>
                       {moment(customer.createdAt).format("DD/MM/YYYY")}
                     </TableCell>

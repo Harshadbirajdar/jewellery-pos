@@ -132,14 +132,52 @@ const Invoice = React.forwardRef((props, ref) => {
               className={styles.bottom}
               style={{ borderTop: "1px solid" }}
             >
-              <table>
+              <tr style={{ width: "35em", paddingLeft: "1em" }}>
+                <td
+                  style={{
+                    width: "8.5em",
+                    marginLeft: "0.5em",
+                    textAlign: "left",
+                  }}
+                >
+                  Amount in Word :-
+                </td>
+                <td style={{ paddingTop: "1em" }}>
+                  {convertInToWord(parseInt(bill.totalAmount))}
+                </td>
+              </tr>
+
+              <div style={{ position: "absolute", marginTop: "7.5em" }}>
                 <tr>
-                  <td style={{ width: "8.4em" }}>Amount in Word :-</td>
-                  <td style={{ paddingTop: "1em" }}>
-                    {convertInToWord(parseInt(bill.totalAmount))}
+                  <td
+                    style={{
+                      padding: "1em",
+                      width: "10.30em",
+                      borderTop: "1px solid",
+                      borderRight: "1px solid",
+                      textAlign: "center",
+                    }}
+                  >
+                    Cash: {bill.cash}
+                  </td>
+                  <td
+                    style={{
+                      padding: "1em",
+                      width: "10.30em",
+                      borderTop: "1px solid",
+                      borderRight: "1px solid",
+                      textAlign: "center",
+                    }}
+                  >
+                    Online: {bill.online ? bill.online : "-"}
                   </td>
                 </tr>
-              </table>
+              </div>
+
+              {/* <tr style={{ marginTop: "auto" }}>
+                    <td>Cash: {bill.cash}</td>
+                    <td>Online: {bill.online}</td>
+                  </tr> */}
 
               <Table
                 className={styles.table}
@@ -204,13 +242,23 @@ const Invoice = React.forwardRef((props, ref) => {
                       borderRight: "1px solid",
                     }}
                   >
-                    Round Off
+                    {bill.discount ? "Discount" : "Round Off"}
                   </TableCell>
                   <TableCell
                     align="center"
                     style={{ borderBottom: "1px solid" }}
                   >
-                    {(parseInt(bill.totalAmount) - bill.totalAmount).toFixed(2)}
+                    {bill.discount
+                      ? (
+                          bill.discount +
+                          bill.totalAmount -
+                          parseInt(bill.totalAmount)
+                        ).toFixed(2)
+                      : (parseInt(bill.totalAmount) - bill.totalAmount).toFixed(
+                          2
+                        )}
+
+                    {/* {(parseInt(bill.totalAmount) - bill.totalAmount).toFixed(2)} */}
                   </TableCell>
                 </TableRow>
                 <TableRow>

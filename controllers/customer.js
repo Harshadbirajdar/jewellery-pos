@@ -57,9 +57,11 @@ exports.createCustomer = (req, res) => {
 
 exports.pushBillInCustomer = (req, res) => {
   let bill = req.bill;
+  let pending = parseInt(bill.totalAmount) - bill.cash - bill.online;
+
   Customer.findByIdAndUpdate(
     bill.customer,
-    { $push: { purchase: bill } },
+    { $push: { purchase: bill }, $inc: { pending: pending } },
     (err, customer) => {
       if (err) {
         return res.status.json({

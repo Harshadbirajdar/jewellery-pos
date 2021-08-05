@@ -1,4 +1,7 @@
 import {
+  GET_BILL_EXCEL_FAILED,
+  GET_BILL_EXCEL_START,
+  GET_BILL_EXCEL_SUCCESS,
   GET_BILL_REPORT_FAILED,
   GET_BILL_REPORT_START,
   GET_BILL_REPORT_SUCCESS,
@@ -12,6 +15,11 @@ const initalState = {
     page: 0,
     bill: [],
     totalCount: 0,
+  },
+  excelBill: {
+    loading: false,
+    error: false,
+    bill: [],
   },
 };
 
@@ -48,6 +56,37 @@ const report = (state = initalState, action) => {
           error: action.payload,
         },
       };
+
+    case GET_BILL_EXCEL_START:
+      return {
+        ...state,
+        excelBill: {
+          loading: true,
+          error: false,
+          bill: [],
+        },
+      };
+
+    case GET_BILL_EXCEL_SUCCESS:
+      return {
+        ...state,
+        excelBill: {
+          loading: false,
+          error: false,
+          bill: action.payload,
+        },
+      };
+
+    case GET_BILL_EXCEL_FAILED:
+      return {
+        ...state,
+        excelBill: {
+          loading: false,
+          error: action.payload,
+          bill: [],
+        },
+      };
+
     default:
       return state;
   }

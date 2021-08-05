@@ -8,6 +8,9 @@ import {
   GET_METAL_FOR_TAG_FAILED,
   GET_METAL_FOR_TAG_START,
   GET_METAL_FOR_TAG_SUCCESS,
+  GET_PRODUCT_NAME_FAILED,
+  GET_PRODUCT_NAME_START,
+  GET_PRODUCT_NAME_SUCCESS,
 } from "../action/action.type";
 
 const initalState = {
@@ -29,6 +32,11 @@ const initalState = {
     loading: false,
     error: false,
     metal: [],
+  },
+  name: {
+    loading: false,
+    error: false,
+    name: [],
   },
 };
 
@@ -119,6 +127,34 @@ const product = (state = initalState, action) => {
           error: action.payload,
           success: false,
           tag: [],
+        },
+      };
+
+    case GET_PRODUCT_NAME_START:
+      return {
+        ...state,
+        name: {
+          loading: true,
+          error: false,
+          name: [],
+        },
+      };
+    case GET_PRODUCT_NAME_SUCCESS:
+      return {
+        ...state,
+        name: {
+          loading: false,
+          error: false,
+          name: action.payload,
+        },
+      };
+    case GET_PRODUCT_NAME_FAILED:
+      return {
+        ...state,
+        name: {
+          loading: false,
+          error: action.payload,
+          name: [],
         },
       };
     default:

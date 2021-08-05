@@ -145,5 +145,5 @@ export const convertInToWord = (num) => {
       }
     res = words.reverse().join("");
   } else res = "";
-  return res + "Rupees only";
+  return num % 10 ? res + "Rupees only" : res + " Rupees only";
 };

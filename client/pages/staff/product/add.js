@@ -24,10 +24,18 @@ import { addProduct, getMetalList } from "../../../redux/action/addProduct";
 import Fab from "@material-ui/core/Fab";
 import SendIcon from "@material-ui/icons/Save";
 import isStaff from "../../../components/isStaff";
+import { getProductName } from "../../../redux/action/productName";
 
-const Add = ({ fetchMetalList, Metal, addProduct }) => {
+const Add = ({
+  fetchMetalList,
+  Metal,
+  addProduct,
+  fetchProductName,
+  ProductName,
+}) => {
   useEffect(() => {
     fetchMetalList();
+    fetchProductName();
     //  eslint-disable-next-line
   }, []);
 
@@ -106,17 +114,25 @@ const Add = ({ fetchMetalList, Metal, addProduct }) => {
         <Paper>
           <form>
             <Grid container className={styles.form} spacing={2}>
-              <Grid item md={3}>
-                <TextField
-                  variant="outlined"
-                  margin="normal"
-                  fullWidth
-                  required
-                  label="Produtc Name"
-                  autoFocus
-                  inputProps={{ style: { textTransform: "capitalize" } }}
-                  value={product.name}
-                  onChange={onhandleChange("name")}
+              <Grid className={styles.auto_compelete}>
+                <Autocomplete
+                  options={ProductName.name}
+                  getOptionLabel={(option) => option.name}
+                  style={{ width: 300 }}
+                  // value={product.name}
+                  onInputChange={(event, newInputValue) => {
+                    setProduct({ ...product, name: newInputValue.name });
+                  }}
+                  onChange={(event, newValue) => {
+                    setProduct({ ...product, name: newValue.name });
+                  }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Product Name"
+                      variant="outlined"
+                    />
+                  )}
                 />
               </Grid>
               <Grid className={styles.auto_compelete}>
@@ -275,6 +291,7 @@ const Add = ({ fetchMetalList, Metal, addProduct }) => {
 
 const mapStateToProps = (state) => ({
   Metal: state.addProduct.metal,
+  ProductName: state.product.name,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -283,6 +300,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   addProduct: (values, setValues, setProduct) => {
     dispatch(addProduct(values, setValues, setProduct));
+  },
+  fetchProductName: () => {
+    dispatch(getProductName());
   },
 });
 

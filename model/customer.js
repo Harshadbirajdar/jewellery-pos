@@ -9,6 +9,10 @@ const customerSchema = new mongoose.Schema(
     phoneNumber: {
       type: Number,
     },
+    pending: {
+      type: Number,
+      default: 0,
+    },
     purchase: [{ type: ObjectId, ref: "Bill" }],
   },
   {

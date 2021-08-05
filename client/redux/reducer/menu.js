@@ -1,6 +1,7 @@
 import {
   CUSTOMER_STATE,
   METAL_STATE,
+  PRODUCT_NAME_STATE,
   PRODUCT_STATE,
   REPORT_STATE,
 } from "../action/action.type";
@@ -10,6 +11,7 @@ const initalState = {
   product: false,
   report: false,
   customer: false,
+  productName: false,
 };
 
 const menu = (state = initalState, action) => {
@@ -23,6 +25,8 @@ const menu = (state = initalState, action) => {
       return { ...state, report: !state.report };
     case CUSTOMER_STATE:
       return { ...state, customer: !state.customer };
+    case PRODUCT_NAME_STATE:
+      return { ...state, productName: !state.productName };
     default:
       return state;
   }

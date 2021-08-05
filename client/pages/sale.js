@@ -35,6 +35,7 @@ import styles from "../styles/Sale.module.css";
 import Invoice from "../components/Invoice";
 import { useReactToPrint } from "react-to-print";
 import { round } from "../helper";
+import PaymentDialog from "../components/PaymentDialog";
 
 const Sale = ({
   Customer,
@@ -53,6 +54,11 @@ const Sale = ({
     product: [],
     amount: 0,
     gst3: 0,
+    cash: "",
+    online: "",
+    discount: "",
+    totalAmount: 0,
+    pending: 0,
   });
   const [product, setProduct] = useState({
     grossWt: "",
@@ -76,6 +82,8 @@ const Sale = ({
       totalAmount: values.gst3 + amount,
     });
   };
+
+  const [paymentDialog, setPaymentDialog] = useState(false);
 
   const componentRef = useRef();
   useEffect(() => {
@@ -333,6 +341,15 @@ const Sale = ({
     <Base title="Sale Panel">
       <Container>
         {msg()}
+        <PaymentDialog
+          values={values}
+          setValues={setValues}
+          open={paymentDialog}
+          setOpen={setPaymentDialog}
+          btnClick={() => {
+            genrateBill(values, setValues, handlePrint, setPaymentDialog);
+          }}
+        />
         <Paper style={{ padding: "1.5em" }}>
           <Grid container spacing={2}>
             <Grid item>
@@ -396,7 +413,8 @@ const Sale = ({
           className={styles.extendedIcon}
           disabled={values.product.length === 0}
           onClick={() => {
-            genrateBill(values, setValues, handlePrint);
+            // genrateBill(values, setValues, handlePrint);
+            setPaymentDialog(true);
           }}
         >
           <SaveIcon />
@@ -429,8 +447,8 @@ const mapDispatchToProps = (dispatch) => ({
   fetchProductByTag: (tag, setTag, values, setValues, setOpen) => {
     dispatch(getProductByTag(tag, setTag, values, setValues, setOpen));
   },
-  genrateBill: (values, setValues, handlePrint) => {
-    dispatch(genrateBill(values, setValues, handlePrint));
+  genrateBill: (values, setValues, handlePrint, setPaymentDialog) => {
+    dispatch(genrateBill(values, setValues, handlePrint, setPaymentDialog));
   },
   getMetalByTag: (tag, grossRef, values, setValues, setOpen) => {
     dispatch(getMetalByTag(tag, grossRef, values, setValues, setOpen));

@@ -20,6 +20,22 @@ const billSchema = new mongoose.Schema({
   totalAmount: {
     type: Number,
   },
+  cash: {
+    type: Number,
+    default: 0,
+  },
+  online: {
+    type: Number,
+    default: 0,
+  },
+  discount: {
+    type: Number,
+    default: 0,
+  },
+  // pending: {
+  //   type: Number,
+  //   default: 0,
+  // },
 
   product: [
     {

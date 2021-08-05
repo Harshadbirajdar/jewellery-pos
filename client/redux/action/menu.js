@@ -1,6 +1,7 @@
 import {
   CUSTOMER_STATE,
   METAL_STATE,
+  PRODUCT_NAME_STATE,
   PRODUCT_STATE,
   REPORT_STATE,
 } from "./action.type";
@@ -16,4 +17,7 @@ export const reportState = () => ({
 });
 export const customerState = () => ({
   type: CUSTOMER_STATE,
+});
+export const productNameState = () => ({
+  type: PRODUCT_NAME_STATE,
 });

@@ -10,11 +10,13 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 import CategoryIcon from "@material-ui/icons/Category";
 import TollIcon from "@material-ui/icons/Toll";
 import ViewAgendaIcon from "@material-ui/icons/ViewAgenda";
+import BookmarkIcon from "@material-ui/icons/Bookmark";
 import {
   metalState,
   productState,
   reportState,
   customerState,
+  productNameState,
 } from "../redux/action/menu";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import ExpandLess from "@material-ui/icons/ExpandLess";
@@ -30,6 +32,7 @@ import PeopleIcon from "@material-ui/icons/People";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { destoryToken } from "../components/api";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import MoreIcon from "@material-ui/icons/More";
 
 const Menu = ({
   Metal,
@@ -41,6 +44,8 @@ const Menu = ({
   Report,
   customerChange,
   Customer,
+  ProductName,
+  productNameChange,
 }) => {
   const MenuItems = ({ text, Icon, link, className = "" }) => (
     <Link href={link}>
@@ -119,6 +124,19 @@ const Menu = ({
         />
       </SubMenuItem>
       <SubMenuItem
+        state={ProductName}
+        onChange={productNameChange}
+        Icon={BookmarkIcon}
+        title="Product Name"
+      >
+        <MenuItems
+          text="Add Product Name"
+          Icon={MoreIcon}
+          link="/admin/product/name"
+          className={styles.nested}
+        />
+      </SubMenuItem>
+      <SubMenuItem
         state={Customer}
         onChange={customerChange}
         Icon={PeopleIcon}
@@ -166,6 +184,7 @@ const mapStateToProps = (state) => ({
   Product: state.menu.product,
   Report: state.menu.report,
   Customer: state.menu.customer,
+  ProductName: state.menu.productName,
 });
 const mapDispatchToProps = (dispatch) => ({
   metalChange: () => {
@@ -179,6 +198,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   customerChange: () => {
     dispatch(customerState());
+  },
+  productNameChange: () => {
+    dispatch(productNameState());
   },
 });
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Menu));
