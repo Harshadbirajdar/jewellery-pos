@@ -3,9 +3,7 @@ import { connect } from "react-redux";
 import Base from "../../../core/Base";
 import { getBillExcel, getBillReport } from "../../../redux/action/report";
 import isAdmin from "../../../components/isAdmin";
-import FileSaver from "file-saver";
 import GetAppIcon from "@material-ui/icons/GetApp";
-
 import moment from "moment";
 import {
   Button,
@@ -21,7 +19,6 @@ import {
   TableRow,
   TextField,
 } from "@material-ui/core";
-import Excel from "exceljs";
 import { ConvertToExcel } from "../../../helper/ConvertToExcel";
 const Bill = ({ fetchBill, Bill, fetchExcelBill, ExcelBill }) => {
   const [values, setValues] = useState({
