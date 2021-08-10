@@ -25,7 +25,7 @@ import Fab from "@material-ui/core/Fab";
 import SendIcon from "@material-ui/icons/Save";
 import isStaff from "../../../components/isStaff";
 import { getProductName } from "../../../redux/action/productName";
-
+import Message from "../../../components/Message";
 const Add = ({
   fetchMetalList,
   Metal,
@@ -38,7 +38,8 @@ const Add = ({
     fetchProductName();
     //  eslint-disable-next-line
   }, []);
-
+  const [error, setError] = useState(false);
+  const [open, setOpen] = useState(false);
   const [product, setProduct] = useState({
     name: "",
     metal: "",
@@ -57,11 +58,48 @@ const Add = ({
     setProduct({ ...product, [name]: capitalize(event.target.value) });
   };
 
+  const setErrorMsg = (msg) => {
+    setError(msg);
+    setOpen(true);
+  };
+
   const onAddClick = (e) => {
     e.preventDefault();
+    if (!product.name) {
+      setErrorMsg("Please Select the Product Name");
+
+      return "";
+    } else if (!product.metal) {
+      setErrorMsg("Please Select the Metal");
+
+      return "";
+    } else if (!product.shortName) {
+      setErrorMsg("Please Enter the short Name");
+
+      return "";
+    } else if (!product.hsn) {
+      setErrorMsg("Please Enter the HSN Code");
+      return "";
+    } else if (!product.gst) {
+      setErrorMsg("Please enter the GST ");
+      return "";
+    } else if (!product.grossWt) {
+      setErrorMsg("Please enter the Gross Weight");
+      return "";
+    } else if (!product.netWt) {
+      setErrorMsg("Please enter the Net Weight");
+      return "";
+    } else if (!product.labour) {
+      setErrorMsg("Please enter the Labour Charges");
+      return "";
+    } else if (!product.qty) {
+      setErrorMsg("Please enter the Qty");
+      return "";
+    }
     let array = values;
     array.push(product);
     setValues(array);
+
     setProduct({
       ...product,
       grossWt: "",
@@ -70,7 +108,6 @@ const Add = ({
       labourOn: "",
       qty: "",
     });
-    console.log(values);
   };
   const Tables = () => (
     <Table>
@@ -112,6 +149,7 @@ const Add = ({
     <Base title="Add Product">
       <Container>
         <Paper>
+          <Message error={error} open={open} setOpen={setOpen} />
           <form>
             <Grid container className={styles.form} spacing={2}>
               <Grid className={styles.auto_compelete}>

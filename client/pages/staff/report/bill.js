@@ -153,7 +153,7 @@ const Bill = ({ fetchBill, Bill, fetchExcelBill, ExcelBill }) => {
                       },
                     },
                   ];
-                  ConvertToExcel(column, ExcelBill.bill, "Test");
+                  ConvertToExcel(column, ExcelBill.bill, "Bill Report");
                 }}
               >
                 Export To XLSX

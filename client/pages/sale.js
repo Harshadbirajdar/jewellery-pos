@@ -15,6 +15,7 @@ import {
   TableRow,
   Snackbar,
   Fab,
+  IconButton,
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import SaveIcon from "@material-ui/icons/Save";
@@ -36,6 +37,7 @@ import Invoice from "../components/Invoice";
 import { useReactToPrint } from "react-to-print";
 import { round } from "../helper";
 import PaymentDialog from "../components/PaymentDialog";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const Sale = ({
   Customer,
@@ -82,7 +84,17 @@ const Sale = ({
       totalAmount: values.gst3 + amount,
     });
   };
-
+  const calculateGst = () => {
+    let gst3 = values.product.reduce((a, c) => {
+      if (c.gst === 3) {
+        return a + c.amount;
+      }
+      return a;
+    }, 0);
+    gst3 = gst3 * 0.03;
+    console.log(gst3);
+    setValues({ ...values, gst3 });
+  };
   const [paymentDialog, setPaymentDialog] = useState(false);
 
   const componentRef = useRef();
@@ -297,6 +309,7 @@ const Sale = ({
         <TableCell>qty</TableCell>
         <TableCell>Labour</TableCell>
         <TableCell>Amount</TableCell>
+        <TableCell>Action</TableCell>
       </TableHead>
       <TableBody>
         {values.product.map((product, index) => (
@@ -311,6 +324,20 @@ const Sale = ({
             <TableCell>{product.qty}</TableCell>
             <TableCell>{product.labour}</TableCell>
             <TableCell>{product.amount.toFixed(2)}</TableCell>
+            <TableCell>
+              <IconButton
+                color="secondary"
+                onClick={() => {
+                  let product = values.product;
+                  product.splice(index, 1);
+
+                  setValues({ ...values, product });
+                  calculateGst();
+                }}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
