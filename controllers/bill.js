@@ -93,8 +93,8 @@ exports.exportBillReport = (req, res) => {
           cash: bill.cash,
           online: bill.online ? bill.online : "-",
           discount: bill.discount ? bill.discount : "-",
-          amount: bill.amount.toFixed(2),
-          gst: bill.gst3.toFixed(2),
+          amount: Number(bill.amount.toFixed(2)),
+          gst: Number(bill.gst3.toFixed(2)),
           totalAmount: parseInt(bill.totalAmount),
           name: bill.customer?.name ? bill.customer?.name : "-",
           phoneNumber: bill.customer?.phoneNumber
@@ -104,6 +104,7 @@ exports.exportBillReport = (req, res) => {
         };
         array.push(a);
       });
+
       return res.json(array);
     });
 };

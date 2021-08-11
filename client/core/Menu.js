@@ -33,7 +33,6 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { destoryToken } from "../components/api";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import MoreIcon from "@material-ui/icons/More";
-
 const Menu = ({
   Metal,
   metalChange,
@@ -79,25 +78,7 @@ const Menu = ({
     <List>
       <MenuItems text="Dashboard" Icon={DashboardIcon} link="/" />
       <MenuItems text="Sale Panel" Icon={ReceiptIcon} link="/sale" />
-      <SubMenuItem
-        state={Metal}
-        onChange={metalChange}
-        Icon={TollIcon}
-        title="Metal"
-      >
-        <MenuItems
-          text="Create Metal"
-          Icon={CategoryIcon}
-          link="/admin/metal/create"
-          className={styles.nested}
-        />
-        <MenuItems
-          text="View Metals"
-          Icon={ViewAgendaIcon}
-          link="/admin/metal/view"
-          className={styles.nested}
-        />
-      </SubMenuItem>
+
       <SubMenuItem
         state={Product}
         onChange={productChange}
@@ -135,6 +116,12 @@ const Menu = ({
           link="/admin/product/name"
           className={styles.nested}
         />
+        <MenuItems
+          text="View Product Name"
+          Icon={ViewAgendaIcon}
+          link="/admin/product/view"
+          className={styles.nested}
+        />
       </SubMenuItem>
       <SubMenuItem
         state={Customer}
@@ -146,6 +133,25 @@ const Menu = ({
           text="View Customer"
           Icon={AccountCircleIcon}
           link="/staff/customer/view"
+          className={styles.nested}
+        />
+      </SubMenuItem>
+      <SubMenuItem
+        state={Metal}
+        onChange={metalChange}
+        Icon={TollIcon}
+        title="Metal"
+      >
+        <MenuItems
+          text="Create Metal"
+          Icon={CategoryIcon}
+          link="/admin/metal/create"
+          className={styles.nested}
+        />
+        <MenuItems
+          text="View Metals"
+          Icon={ViewAgendaIcon}
+          link="/admin/metal/view"
           className={styles.nested}
         />
       </SubMenuItem>
