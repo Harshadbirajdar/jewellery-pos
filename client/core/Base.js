@@ -13,6 +13,9 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import Menu from "./Menu";
+import Logo from "../assest/gtLogo.png";
+import Image from "next/image";
+import Link from "next/link";
 
 const drawerWidth = 240;
 
@@ -120,6 +123,12 @@ export default function Base({ children, title }) {
         }}
       >
         <div className={classes.drawerHeader}>
+          <Image width={50} height={50} src={Logo}></Image>
+          <h2>
+            <a href="https://gratustech.com" target="_blank">
+              Gratus POS
+            </a>
+          </h2>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "ltr" ? (
               <ChevronLeftIcon />
