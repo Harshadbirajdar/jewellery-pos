@@ -124,11 +124,12 @@ export default function Base({ children, title }) {
       >
         <div className={classes.drawerHeader}>
           <Image width={50} height={50} src={Logo}></Image>
-          <h2>
+          <h3>
             <a href="https://gratustech.com" target="_blank">
               Gratus POS
             </a>
-          </h2>
+          </h3>
+
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "ltr" ? (
               <ChevronLeftIcon />
